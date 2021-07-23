@@ -1,6 +1,6 @@
 package model.dao;
 
-import dB.DB;
+import db.DB;
 import model.dao.impl.DepartmentDaoJDBC;
 import model.dao.impl.SellerDaoJDBC;
 

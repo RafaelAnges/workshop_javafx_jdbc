@@ -6,15 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import dB.DB;
-import dB.DbException;
+import java.util.List;
+
+import db.DB;
+import db.DbException;
+import db.DbIntegrityException;
 import model.dao.DepartmentDao;
 import model.entities.Department;
-import model.entities.Seller;
+
 
 public class DepartmentDaoJDBC implements DepartmentDao {
 
@@ -78,20 +78,18 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM department WHERE Id = ?");
-
+			st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+			
 			st.setInt(1, id);
-			int rows = st.executeUpdate();
-			if (rows == 0) {
-				throw new DbException("No exist Id");
-			}
-
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		} finally {
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		}
+		finally {
 			DB.closeStatement(st);
 		}
-
 	}
 
 	@Override
